@@ -1,4 +1,5 @@
 import { StyleSheet, Text } from "react-native";
+import { colors, fontSize } from "../styles/theme";
 
 export function Typography({ children, variant }) {
     return (
@@ -8,25 +9,25 @@ export function Typography({ children, variant }) {
 
 const styles = StyleSheet.create({
     text: {
-        color: "white",
-        fontSize: 24,
+        color: colors.white,
+        fontSize: fontSize.medium,
         textAlign: 'center'
     },
     title: {
-        color: "white",
-        fontSize: 36,
+        color: colors.white,
+        fontSize: fontSize.large,
         fontWeight: 'bold',
         textAlign: 'center'
     },
     button: {
         textAlign: 'center',
-        color: 'white',
-        fontSize: 26,
+        color: colors.white,
+        fontSize: fontSize.medium,
         fontWeight: 'bold'
     },
     link: {
-        color: "#ABABAB",
+        color: colors.gray,
         textDecorationLine: 'underline',
-        fontSize: 18
+        fontSize: fontSize.small
     }
 })

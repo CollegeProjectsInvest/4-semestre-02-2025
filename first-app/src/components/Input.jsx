@@ -1,4 +1,5 @@
 import { TextInput, StyleSheet } from "react-native";
+import { colors, fontSize, scale, spacing } from "../styles/theme";
 
 export function Input({ placeholder, secureTextEntry }) {
     return (
@@ -13,11 +14,11 @@ export function Input({ placeholder, secureTextEntry }) {
 
 const styles = StyleSheet.create({
     input: {
-        padding: 20,
-        backgroundColor: '#222222',
+        padding: spacing.lg,
+        backgroundColor: colors.secondary,
         width: '100%',
-        borderRadius: 10,
-        fontSize: 26,
-        color: 'white',
+        borderRadius: scale(10),
+        fontSize: fontSize.medium,
+        color: colors.white,
     },
-})
+});

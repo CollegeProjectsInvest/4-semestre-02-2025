@@ -1,12 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 
 import { Input, Button, Divider, Typography } from '../components';
+import { spacing } from '../styles/theme';
 
 export function LoginPage() {
     return (
-        <View style={styles.container}>
-            <StatusBar style="light" />
+        <View style={styles.content}>
             <Typography variant={"title"}>Bem Vindo!</Typography>
             <View style={styles.form}>
                 <Input placeholder="E-mail" />
@@ -20,16 +19,13 @@ export function LoginPage() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#141414',
-        alignItems: "center",
-        paddingVertical: 100,
-        paddingHorizontal: 10,
-        gap: 100
+    content: {
+        marginTop: spacing.lg,
+        alignItems: 'center',
+        gap: spacing.lg
     },
     form: {
         width: '100%',
-        gap: 20
+        gap: spacing.sm
     },
 });

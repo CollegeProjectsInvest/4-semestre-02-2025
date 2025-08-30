@@ -1,6 +1,7 @@
 import { TouchableOpacity, StyleSheet } from "react-native";
 
 import { Typography } from "./Typography";
+import { colors, scale, spacing } from '../styles/theme'
 
 export function Button({ title, asLink }) {
     if (asLink) {
@@ -22,9 +23,9 @@ export function Button({ title, asLink }) {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#BB86FC',
+        backgroundColor: colors.primary,
         width: '100%',
-        padding: 20,
-        borderRadius: 10,
+        padding: spacing.lg,
+        borderRadius: scale(10),
     },
 })

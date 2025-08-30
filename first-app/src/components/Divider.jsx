@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from "react-native"
+import { colors, fontSize, scale, spacing } from "../styles/theme"
 
 export function Divider() {
     return (
@@ -14,15 +15,17 @@ const styles = StyleSheet.create({
     divider: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 10
+        justifyContent: 'center',
+        gap: spacing.md,
+        width: '100%',
     },
     line: {
-        backgroundColor: '#ABABAB',
-        height: 2,
-        width: 100
+        backgroundColor: colors.gray,
+        height: scale(2),
+        width: '30%'
     },
     textDivider: {
-        color: '#ABABAB',
-        fontSize: 18
+        color: colors.gray,
+        fontSize: fontSize.medium
     },
 })
