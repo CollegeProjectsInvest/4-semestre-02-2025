@@ -1,9 +1,14 @@
 import { StyleSheet, Text } from "react-native";
 import { colors, fontSize } from "../styles/theme";
 
-export function Typography({ children, variant }) {
+export function Typography({ children, variant, ...rest }) {
     return (
-        <Text style={styles[`${variant}`]}>{children}</Text>
+        <Text
+            {...rest}
+            style={styles[`${variant}`]}
+        >
+            {children}
+        </Text>
     );
 }
 
@@ -11,7 +16,7 @@ const styles = StyleSheet.create({
     text: {
         color: colors.white,
         fontSize: fontSize.medium,
-        textAlign: 'center'
+        textAlign: 'center',
     },
     title: {
         color: colors.white,
