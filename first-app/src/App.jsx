@@ -1,8 +1,8 @@
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet } from "react-native";
 
 // import { LoginPage } from "./pages/LoginPage";
-// import { RegisterPage } from "./pages/RegisterPage";
-import { TasksPage } from "./pages/TasksPage";
+import { RegisterPage } from "./pages/RegisterPage";
+// import { TasksPage } from "./pages/TasksPage";
 import { colors, spacing } from "./styles/theme";
 
 export default function App() {
@@ -10,7 +10,7 @@ export default function App() {
     <ScrollView style={styles.container}>
       <SafeAreaView />
       <StatusBar style="light" />
-      <TasksPage />
+      <RegisterPage />
     </ScrollView>
   );
 }

@@ -1,12 +1,12 @@
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
 
 import { Typography } from "./Typography";
 import { colors, scale, spacing } from '../styles/theme'
 
-export function Button({ title, asLink }) {
+export function Button({ title, asLink, onPress, loading }) {
     if (asLink) {
         return (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={onPress}>
                 <Typography variant="link">
                     {title}
                 </Typography>
@@ -15,8 +15,12 @@ export function Button({ title, asLink }) {
     }
 
     return (
-        <TouchableOpacity style={styles.button}>
-            <Typography variant="button">{title}</Typography>
+        <TouchableOpacity style={styles.button} onPress={onPress}>
+            {loading ? (
+                <ActivityIndicator />
+            ) : (
+                <Typography variant="button">{title}</Typography>
+            )}
         </TouchableOpacity>
     );
 }

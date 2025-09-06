@@ -34,5 +34,10 @@ const styles = StyleSheet.create({
         color: colors.gray,
         textDecorationLine: 'underline',
         fontSize: fontSize.small
-    }
+    },
+    textError: {
+        color: colors.red,
+        fontSize: fontSize.medium,
+        textAlign: 'center',
+    },
 })
