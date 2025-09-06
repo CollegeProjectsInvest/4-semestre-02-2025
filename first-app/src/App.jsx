@@ -1,17 +1,17 @@
-import { SafeAreaView, ScrollView, StatusBar, StyleSheet } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
 
-// import { LoginPage } from "./pages/LoginPage";
+import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
-// import { TasksPage } from "./pages/TasksPage";
+import { TasksPage } from "./pages/TasksPage";
 import { colors, spacing } from "./styles/theme";
 
 export default function App() {
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <SafeAreaView />
       <StatusBar style="light" />
-      <RegisterPage />
-    </ScrollView>
+      <TasksPage />
+    </View>
   );
 }
 
@@ -21,4 +21,4 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     paddingHorizontal: spacing.sm
   },
-});
+})

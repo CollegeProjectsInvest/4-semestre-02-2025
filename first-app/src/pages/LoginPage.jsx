@@ -1,11 +1,11 @@
 import { StyleSheet, View } from 'react-native';
 
-import { Input, Button, Divider, Typography } from '../components';
+import { Input, Button, Divider, Typography, Container } from '../components';
 import { spacing } from '../styles/theme';
 
 export function LoginPage() {
     return (
-        <View style={styles.content}>
+        <Container>
             <Typography variant={"title"}>Bem Vindo!</Typography>
             <View style={styles.form}>
                 <Input placeholder="E-mail" />
@@ -14,16 +14,11 @@ export function LoginPage() {
             </View>
             <Divider />
             <Button asLink title="Criar uma conta" />
-        </View>
-    )
+        </Container>
+    );
 }
 
 const styles = StyleSheet.create({
-    content: {
-        marginTop: spacing.lg,
-        alignItems: 'center',
-        gap: spacing.lg
-    },
     form: {
         width: '100%',
         gap: spacing.sm
