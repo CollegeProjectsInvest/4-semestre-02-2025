@@ -9,6 +9,7 @@ import { TaskCreateController } from "./controllers/task-create-controller.js";
 import { TaskListAllController } from "./controllers/task-list-all-controller.js";
 import { TaskUpdateController } from "./controllers/task-update-controller.js";
 import { TaskDeleteController } from "./controllers/task-delete-controller.js";
+import { UserMeController } from "./controllers/user-me-controller.js";
 import { HttpHelper } from "./helpers/http-helper.js";
 
 const fastify = Fastify({ logger: true });
@@ -37,6 +38,11 @@ fastify.decorate("authenticate", async (request, reply) => {
 // Usuário
 fastify.post("/api/user/register", new UserRegisterController().handle);
 fastify.post("/api/user/login", new UserLoginController().handle);
+fastify.get(
+    "/api/user/me",
+    { preHandler: [fastify.authenticate] },
+    new UserMeController().handle,
+);
 fastify.get("/api/user/logout", async (request, response) => {
     const httpHelper = new HttpHelper(response);
     response.clearCookie("token", { path: "/" });

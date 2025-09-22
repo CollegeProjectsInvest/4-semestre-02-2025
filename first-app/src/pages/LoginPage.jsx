@@ -4,30 +4,23 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Input, Button, Divider, Typography, Container } from "../components";
 import { spacing } from "../styles/theme";
-import { loginUserService } from "../services/login-user-service";
+import { useAuthContext } from "../contexts/auth-context";
 
 export function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null);
+
+    const { errorMessage, loading, login } = useAuthContext();
 
     const navigation = useNavigation();
 
     const handleLoginUser = async () => {
-        try {
-            setLoading(true);
-            const result = await loginUserService({
-                email,
-                password,
+        await login({ email, password });
+        if (!errorMessage) {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: "tasks" }],
             });
-            if (result.user) {
-                navigation.navigate("tasks");
-            }
-        } catch (error) {
-            setErrorMessage(error.message);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -49,7 +42,7 @@ export function LoginPage() {
                 <Button
                     loading={loading}
                     title="Entrar"
-                    onPress={() => handleLoginUser()}
+                    onPress={handleLoginUser}
                 />
                 {errorMessage && (
                     <Typography variant={"textError"}>

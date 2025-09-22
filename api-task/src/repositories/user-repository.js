@@ -1,6 +1,11 @@
 import { prisma } from "../lib/prisma.js";
 
 export class UserRepository {
+    async findById(id) {
+        const user = await prisma.user.findUnique({ where: { id } });
+        return user;
+    }
+
     async findByEmail(email) {
         const user = await prisma.user.findUnique({
             where: { email },

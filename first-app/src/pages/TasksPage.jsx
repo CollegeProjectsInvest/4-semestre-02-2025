@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import Checkbox from "expo-checkbox";
@@ -6,83 +6,24 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Button, Input, Typography, Container } from "../components";
 import { colors, scale, spacing } from "../styles/theme";
-import { createTaskService } from "../services/create-task-service";
-import { getTasksService } from "../services/get-tasks-service";
-import { removeTaskService } from "../services/remove-task-service";
-import { updateTaskService } from "../services/update-task-service";
-import { logoutUserService } from "../services/logout-user-service";
+import { useTasksContext } from "../contexts/tasks-context";
+import { useAuthContext } from "../contexts/auth-context";
 
 export function TasksPage() {
     const [title, setTitle] = useState("");
-    const [tasks, setTasks] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null);
+
+    const { loading, errorMessage, tasks, createTask, removeTask, updateTask } =
+        useTasksContext();
+    const { logout } = useAuthContext();
 
     const navigation = useNavigation();
 
-    useEffect(() => {
-        handleGetTasks();
-    }, []);
-
-    const handleGetTasks = async () => {
-        try {
-            setLoading(true);
-            const result = await getTasksService();
-            setTasks(result);
-        } catch (error) {
-            setErrorMessage(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleCreateTask = async () => {
-        try {
-            setLoading(true);
-            await createTaskService({ title });
-            await handleGetTasks();
-            setTitle("");
-        } catch (error) {
-            setErrorMessage(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleRemoveTask = async ({ taskId }) => {
-        try {
-            setLoading(true);
-            await removeTaskService({ taskId });
-            await handleGetTasks();
-        } catch (error) {
-            setErrorMessage(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleUpdateTask = async ({ taskId, finished }) => {
-        try {
-            setLoading(true);
-            await updateTaskService({ taskId, finished });
-            await handleGetTasks();
-        } catch (error) {
-            setErrorMessage(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleLogoutUser = async () => {
-        try {
-            setLoading(true);
-            await logoutUserService();
-            navigation.navigate("login");
-        } catch (error) {
-            setErrorMessage(error.message);
-        } finally {
-            setLoading(false);
-        }
+    const handleLogout = async () => {
+        await logout();
+        navigation.reset({
+            index: 0,
+            routes: [{ name: "login" }],
+        });
     };
 
     return (
@@ -90,13 +31,7 @@ export function TasksPage() {
             <Typography variant={"title"}>
                 Crie e organize as suas tarefas.
             </Typography>
-            <Button
-                title="Sair"
-                asLink
-                onPress={() => {
-                    handleLogoutUser();
-                }}
-            />
+            <Button title="Sair" asLink onPress={handleLogout} />
             <FlatList
                 data={tasks}
                 style={{
@@ -116,7 +51,7 @@ export function TasksPage() {
                                 color={colors.primary}
                                 value={item.finished}
                                 onChange={() =>
-                                    handleUpdateTask({
+                                    updateTask({
                                         taskId: item.id,
                                         finished: !item.finished,
                                     })
@@ -134,9 +69,7 @@ export function TasksPage() {
                             name="trash-2"
                             size={24}
                             color="red"
-                            onPress={() =>
-                                handleRemoveTask({ taskId: item.id })
-                            }
+                            onPress={() => removeTask({ taskId: item.id })}
                         />
                     </View>
                 )}
@@ -150,7 +83,10 @@ export function TasksPage() {
                 <Button
                     title={"Adicionar"}
                     loading={loading}
-                    onPress={() => handleCreateTask()}
+                    onPress={() => {
+                        createTask({ title });
+                        setTitle("");
+                    }}
                 />
                 {errorMessage && (
                     <Typography variant={"textError"}>

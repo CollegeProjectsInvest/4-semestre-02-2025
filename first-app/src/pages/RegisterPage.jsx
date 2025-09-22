@@ -4,32 +4,24 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Input, Button, Divider, Typography, Container } from "../components";
 import { spacing } from "../styles/theme";
-import { registerUserService } from "../services/register-user-service";
+import { useAuthContext } from "../contexts/auth-context";
 
 export function RegisterPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmationPassword, setConfirmationPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState(null);
-    const [loading, setLoading] = useState(false);
+
+    const { loading, errorMessage, register } = useAuthContext();
 
     const navigation = useNavigation();
 
     const handleRegisterUser = async () => {
-        try {
-            setLoading(true);
-            const result = await registerUserService({
-                email,
-                password,
-                confirmationPassword,
+        await register({ email, password, confirmationPassword });
+        if (!errorMessage) {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: "tasks" }],
             });
-            if (result.user) {
-                navigation.navigate("tasks");
-            }
-        } catch (error) {
-            setErrorMessage(error.message);
-        } finally {
-            setLoading(false);
         }
     };
 
